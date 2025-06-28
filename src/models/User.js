@@ -1,53 +1,61 @@
-import promisePool from "../../config/db.js"; // Adjust path as needed
+import getDB from "../../config/db.js";
 
 class User {
   static async findById(id) {
+    const pool = getDB();
     try {
-      const [rows] = await promisePool.query(
+      const [rows] = await pool.query(
         "SELECT id, username, role FROM users WHERE id = ?",
         [id]
       );
       return rows.length > 0 ? rows[0] : null;
     } catch (error) {
+      console.error(error);
       throw new Error("Error finding user by ID");
     }
   }
 
   static async findByUsername(username) {
+    const pool = getDB();
     try {
-      const [rows] = await promisePool.query(
+      const [rows] = await pool.query(
         "SELECT * FROM users WHERE username = ?",
         [username]
       );
       return rows.length > 0 ? rows[0] : null;
     } catch (error) {
+      console.error(error);
       throw new Error("Error finding user by username");
     }
   }
+
   static async findAll() {
+    const pool = getDB();
     try {
-      const [rows] = await promisePool.query(
-        "SELECT id, username, role FROM users"
-      );
+      const [rows] = await pool.query("SELECT id, username, role FROM users");
       return rows;
     } catch (error) {
+      console.error(error);
       throw new Error("Error retrieving all users");
     }
   }
 
   static async create(username, password, role = "user") {
+    const pool = getDB();
     try {
-      const [result] = await promisePool.query(
+      const [result] = await pool.query(
         "INSERT INTO users (username, password, role) VALUES (?, ?, ?)",
         [username, password, role]
       );
       return result.insertId;
     } catch (error) {
+      console.error(error);
       throw new Error("Error creating user");
     }
   }
 
   static async update(id, updateData) {
+    const pool = getDB();
     const keys = Object.keys(updateData);
     const values = Object.values(updateData);
 
@@ -61,16 +69,19 @@ class User {
     values.push(id);
 
     try {
-      await promisePool.query(query, values);
+      await pool.query(query, values);
     } catch (error) {
+      console.error(error);
       throw new Error("Error updating user");
     }
   }
 
   static async delete(id) {
+    const pool = getDB();
     try {
-      await promisePool.query("DELETE FROM users WHERE id = ?", [id]);
+      await pool.query("DELETE FROM users WHERE id = ?", [id]);
     } catch (error) {
+      console.error(error);
       throw new Error("Error deleting user");
     }
   }
