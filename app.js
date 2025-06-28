@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { config } from "dotenv";
-import serverless from "serverless-http"; // ✅ Needed for Vercel
 
 import promisePool from "./config/db.js";
 import userRoutes from "./src/routes/userRoutes.js";
@@ -11,11 +10,13 @@ import letterRoutes from "./src/routes/lettersRoutes.js";
 import pdfRoutes from "./src/routes/pdfRoutes.js";
 import auditListsRoutes from "./src/routes/auditListsRoutes.js";
 import auditListCompaniesRoutes from "./src/routes/auditListCompaniesRoutes.js";
-// testing
+
+// Load environment variables
 config();
 
 const app = express();
 
+// CORS config (adjust FRONTEND_ORIGIN in .env if needed)
 app.use(
   cors({
     origin: process.env.FRONTEND_ORIGIN || "http://localhost:5173",
@@ -34,4 +35,8 @@ app.use("/pdf", pdfRoutes);
 app.use("/audit-lists", auditListsRoutes);
 app.use("/audit-list-companies", auditListCompaniesRoutes);
 
-export const handler = serverless(app);
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
