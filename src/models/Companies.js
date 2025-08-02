@@ -82,10 +82,27 @@ class Company {
   }
 
   static async delete(id) {
+    const conn = await promisePool.getConnection();
     try {
-      await promisePool.query("DELETE FROM companies WHERE id = ?", [id]);
+      await conn.beginTransaction();
+
+      // Delete dependent records first
+      await conn.query("DELETE FROM letters WHERE company_id = ?", [id]);
+      await conn.query("DELETE FROM audit_in_progress WHERE company_id = ?", [
+        id,
+      ]);
+      // Add other dependent deletions here if needed
+
+      // Now delete the company
+      await conn.query("DELETE FROM companies WHERE id = ?", [id]);
+
+      await conn.commit();
     } catch (error) {
+      await conn.rollback();
+      console.error("Failed to delete company:", error);
       throw new Error("Error deleting company");
+    } finally {
+      conn.release();
     }
   }
 }

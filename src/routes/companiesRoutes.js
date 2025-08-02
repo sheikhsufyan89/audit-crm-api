@@ -23,6 +23,6 @@ router.get(
   getCompanyById
 );
 router.put("/:id", updateCompany);
-router.delete("/:id", authenticate, authorizeRoles("admin"), deleteCompany);
+router.delete("/:id", deleteCompany);
 
 export default router;

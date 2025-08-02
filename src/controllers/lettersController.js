@@ -8,10 +8,6 @@ import path from "path";
 import puppeteer from "puppeteer";
 import Company from "../models/Companies.js";
 
-const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/djumpm4o6/raw/upload";
-
-const CLOUDINARY_UPLOAD_PRESET = "consent-letters";
-
 cloudinary.config({
   cloud_name: "djumpm4o6",
   api_key: "284473795147635",
@@ -281,6 +277,9 @@ const deleteLetter = async (req, res) => {
   }
 };
 
+const imgUrl =
+  "https://res.cloudinary.com/djumpm4o6/image/upload/v1754165343/vlph6b5csjfj1hk57pjp.png";
+
 const generateLetterHTML = (companyName, year, dateStr, isRecurring) => {
   return `
     <div style="font-family: Georgia, serif; color: black; background: white; max-width: 700px; margin: 0 auto; padding: 40px;">
@@ -290,10 +289,13 @@ const generateLetterHTML = (companyName, year, dateStr, isRecurring) => {
       <h3 style="font-weight: bold;">Consent to act as Auditors for the year ending June 30, ${year}</h3>
       <p>${
         isRecurring
-          ? `We are pleased to continue as auditors of your company for the year ending June 30, ${year}.`
-          : `We are pleased to be appointed as auditors of your company for the year ending June 30, ${year}.`
+          ? `With reference to your communication, we are pleased to convey our willingness to continue audit of the financial statements of your company for the year ending June 30, ${year}.`
+          : `With reference to your communication, we are pleased to convey our willingness to be appointed as auditors of the above named Company for the year ending June 30, ${year}.`
       }</p>
+      <br/>
       <p>Yours truly,</p>
+      <br/>
+      <img src="${imgUrl}" alt="Digital Signature" style="width: 200px; height: auto;" />
       <p style="font-weight:bold;margin-top:32px">
         Clarkson Hyde Saud Ansari<br/>
         <span style="font-weight:normal">Chartered Accountants</span>
