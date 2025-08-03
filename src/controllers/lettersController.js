@@ -278,7 +278,7 @@ const deleteLetter = async (req, res) => {
 };
 
 const imgUrl =
-  "https://res.cloudinary.com/djumpm4o6/image/upload/v1754165343/vlph6b5csjfj1hk57pjp.png";
+  "https://res.cloudinary.com/djumpm4o6/image/upload/v1754245584/d6ahojqhoinficscl5vf.png";
 
 const generateLetterHTML = (companyName, year, dateStr, isRecurring) => {
   return `
@@ -294,9 +294,9 @@ const generateLetterHTML = (companyName, year, dateStr, isRecurring) => {
       }</p>
       <br/>
       <p>Yours truly,</p>
-      <br/>
-      <img src="${imgUrl}" alt="Digital Signature" style="width: 200px; height: auto;" />
-      <p style="font-weight:bold;margin-top:32px">
+
+      <img src="${imgUrl}" alt="Digital Signature" style="width: 250px; height: auto;" />
+      <p style="font-weight:bold;margin-top:10px">
         Clarkson Hyde Saud Ansari<br/>
         <span style="font-weight:normal">Chartered Accountants</span>
       </p>
