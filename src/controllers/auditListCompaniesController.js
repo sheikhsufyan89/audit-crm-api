@@ -4,6 +4,23 @@ import AuditListCompanies from "../models/AuditListCompanies.js";
 import Companies from "../models/Companies.js";
 
 // Update an audit list company entry
+
+// Get all companies for a given year
+const getAuditListCompaniesByYear = async (req, res) => {
+  const { year } = req.params;
+
+  try {
+    const companies = await AuditListCompanies.findByYear(year);
+    res.send({ status: "ok", data: companies });
+  } catch (error) {
+    console.error("Error fetching audit list companies by year:", error);
+    res.status(500).send({
+      status: "error",
+      data: "Error fetching audit list companies by year",
+    });
+  }
+};
+
 const updateAuditListCompany = async (req, res) => {
   const { id } = req.params;
   const updatedFields = { ...req.body };
@@ -145,4 +162,5 @@ export {
   createAuditListCompany,
   deleteAuditListCompany,
   updateAuditListCompany,
+  getAuditListCompaniesByYear,
 };

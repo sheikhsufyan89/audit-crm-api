@@ -276,13 +276,19 @@ const deleteLetter = async (req, res) => {
       .send({ status: "error", data: "Failed to delete letter" });
   }
 };
+const header =
+  "https://res.cloudinary.com/djumpm4o6/image/upload/v1754503327/oeuoavifjkbgb5yn2cgh.jpg";
 
 const imgUrl =
   "https://res.cloudinary.com/djumpm4o6/image/upload/v1754245584/d6ahojqhoinficscl5vf.png";
 
 const generateLetterHTML = (companyName, year, dateStr, isRecurring) => {
   return `
-    <div style="font-family: Georgia, serif; color: black; background: white; max-width: 700px; margin: 0 auto; padding: 40px;">
+    <div style="font-family: Georgia, serif; color: black; background: white; margin: 0 auto; display: flex; align-items: center; flex-direction: column">
+        <div style="text-align: center; margin-bottom: 40px;">
+        <img src="${header}" alt="Letterhead" style="width: 100%; object-fit: contain;" />
+      </div>
+      <div style="max-width: 700px;">
       <p>${dateStr}</p>
       <p>The Board of Directors<br/>${companyName.toUpperCase()},<br/>Karachi.</p>
       <p>Dear Sirs,</p>
@@ -300,6 +306,7 @@ const generateLetterHTML = (companyName, year, dateStr, isRecurring) => {
         Clarkson Hyde Saud Ansari<br/>
         <span style="font-weight:normal">Chartered Accountants</span>
       </p>
+      </div>
     </div>
   `;
 };

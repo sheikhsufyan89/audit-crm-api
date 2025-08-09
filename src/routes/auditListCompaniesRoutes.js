@@ -7,6 +7,7 @@ import {
   createAuditListCompany,
   deleteAuditListCompany,
   updateAuditListCompany,
+  getAuditListCompaniesByYear,
 } from "../controllers/auditListCompaniesController.js";
 
 import { authenticate, authorizeRoles } from "../../middleware/auth.js";
@@ -15,6 +16,7 @@ const router = express.Router();
 
 // 🔓 Public routes
 router.get("/", getAllAuditListCompanies);
+router.get("/:year", getAuditListCompaniesByYear);
 router.get("/audit/:audit_list_id", getCompaniesByAuditListId);
 router.put("/:id", updateAuditListCompany);
 

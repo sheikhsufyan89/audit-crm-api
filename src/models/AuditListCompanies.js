@@ -2,6 +2,23 @@
 import promisePool from "../../config/db.js";
 
 class AuditListCompanies {
+  static async findByYear(year) {
+    try {
+      const [rows] = await promisePool.query(
+        `SELECT 
+         alc.*, 
+         c.name AS company_name
+       FROM audit_list_companies alc
+       JOIN audit_lists al ON alc.audit_list_id = al.id
+       JOIN companies c ON alc.company_id = c.id
+       WHERE al.year = ?`,
+        [year]
+      );
+      return rows;
+    } catch (error) {
+      throw new Error("Error finding audit list companies by year");
+    }
+  }
   static async findByAuditListAndCompany(auditListId, companyId) {
     try {
       const [rows] = await promisePool.query(
